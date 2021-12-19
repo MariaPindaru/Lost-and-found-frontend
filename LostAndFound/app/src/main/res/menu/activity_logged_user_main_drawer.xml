@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_all"
+            android:icon="@android:drawable/ic_search_category_default"
+            android:title="All posts" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@android:drawable/ic_menu_manage"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_posts"
+            android:icon="@android:drawable/ic_menu_recent_history"
+            android:title="@string/menu_gallery" />
+    </group>
+
+</menu>
