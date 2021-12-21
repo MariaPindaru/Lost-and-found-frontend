@@ -13,7 +13,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
+        android:layout_marginVertical="15dp"
         android:orientation="horizontal">
 
         <Button
@@ -22,7 +23,7 @@
             android:layout_weight="1"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:drawableTop="@drawable/ic_menu_posts"
+            android:drawableLeft="@drawable/baseline_sentiment_very_dissatisfied_24"
             android:text="Lost" />
 
         <Button
@@ -31,7 +32,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:drawableTop="@drawable/ic_menu_logout"
+            android:drawableLeft="@drawable/baseline_sentiment_satisfied_alt_24"
             android:text="Found" />
     </LinearLayout>
 

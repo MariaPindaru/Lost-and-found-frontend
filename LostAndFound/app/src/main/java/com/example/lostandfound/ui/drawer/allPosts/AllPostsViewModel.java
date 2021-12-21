@@ -24,6 +24,12 @@ public class AllPostsViewModel extends ViewModel {
 
         postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
                 today, R.drawable.ic_menu_posts));
+        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
+                today, R.drawable.ic_menu_posts));
+        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
+                today, R.drawable.ic_menu_posts));
+        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
+                today, R.drawable.ic_menu_posts));
 
         postArrayLiveData.setValue(postArrayList);
     }
