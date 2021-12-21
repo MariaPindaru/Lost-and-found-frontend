@@ -4,72 +4,58 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lostandfound.R;
 import com.example.lostandfound.databinding.FragmentAllBinding;
+import com.example.lostandfound.model.Post;
+import com.example.lostandfound.ui.drawer.PostAdapter;
 
 import java.util.ArrayList;
 
 public class AllPostsFragment extends Fragment {
 
-    private AllPostsViewModel slideshowViewModel;
+    private AllPostsViewModel allPostsViewModel;
     private FragmentAllBinding binding;
+
+    private RecyclerView postRV;
+    private PostAdapter postAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                new ViewModelProvider(this).get(AllPostsViewModel.class);
+        allPostsViewModel =
+                new ViewModelProvider(requireActivity()).get(AllPostsViewModel.class);
 
         binding = FragmentAllBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-//        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
+        postRV = root.findViewById(R.id.idRVCourse);
+        postAdapter = new PostAdapter(getContext());
 
-        final ListView listview = binding.listView;
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        postRV.setLayoutManager(linearLayoutManager);
 
-        final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < 20; ++i) {
-            list.add(Integer.toString(i));
-        }
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
+        postRV.setAdapter(postAdapter);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        Observer<ArrayList<Post>> userListUpdateObserver = new Observer<ArrayList<Post>>() {
             @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-                view.animate().setDuration(2000).alpha(0)
-                        .withEndAction(new Runnable() {
-                            @Override
-                            public void run() {
-                                list.remove(item);
-                                adapter.notifyDataSetChanged();
-                                view.setAlpha(1);
-                            }
-                        });
+            public void onChanged(ArrayList<Post> userArrayList) {
+                postAdapter.updatePostList(userArrayList);
             }
+        };
 
-        });
+        allPostsViewModel.getPosts().observe(getViewLifecycleOwner(), userListUpdateObserver);
 
         return root;
     }
+
+
 
     @Override
     public void onDestroyView() {

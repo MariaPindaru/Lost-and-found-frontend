@@ -18,9 +18,9 @@
     <string name="nav_header_subtitle">user.email@yahoo.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
-    <string name="menu_home">Profile</string>
-    <string name="menu_gallery">See your posts</string>
-    <string name="menu_slideshow">Logout</string>
+    <string name="profile">Profile</string>
+    <string name="see_your_posts">See your posts</string>
+    <string name="all_posts">All posts</string>
     <string name="title_activity_logged_user_main">LoggedUserMainActivity</string>
 
     <string name="register"><u><b><i>Register</i></b></u></string>

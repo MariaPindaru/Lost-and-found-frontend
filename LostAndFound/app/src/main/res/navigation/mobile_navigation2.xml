@@ -8,18 +8,18 @@
     <fragment
         android:id="@+id/nav_all"
         android:name="com.example.lostandfound.ui.drawer.allPosts.AllPostsFragment"
-        android:label="@string/menu_home"
+        android:label="@string/all_posts"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.lostandfound.ui.drawer.profile.ProfileFragment"
-        android:label="@string/menu_home"
+        android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/nav_posts"
         android:name="com.example.lostandfound.ui.drawer.myPosts.MyPostsFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/see_your_posts"
         tools:layout="@layout/fragment_current" />
 
 </navigation>

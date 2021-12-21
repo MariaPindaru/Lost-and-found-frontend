@@ -17,6 +17,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lostandfound.databinding.ActivityLoggedUserMainBinding;
 
@@ -24,6 +25,10 @@ public class LoggedUserMainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityLoggedUserMainBinding binding;
+
+    private static RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private static RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +61,7 @@ public class LoggedUserMainActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(LoggedUserMainActivity.this, LoginActivity.class);
-                LoggedUserMainActivity.this.startActivity(myIntent);
+                Logout();
                 finish();
             }
         });
@@ -65,7 +69,8 @@ public class LoggedUserMainActivity extends AppCompatActivity {
     }
 
     public void Logout(){
-
+        Intent myIntent = new Intent(LoggedUserMainActivity.this, LoginActivity.class);
+        LoggedUserMainActivity.this.startActivity(myIntent);
     }
 
     @Override
