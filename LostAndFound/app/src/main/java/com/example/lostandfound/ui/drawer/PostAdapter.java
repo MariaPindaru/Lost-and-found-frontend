@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lostandfound.R;
-import com.example.lostandfound.model.Post;
+import com.example.lostandfound.data.model.Post;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -20,23 +20,34 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
 
     private Context context;
     private ArrayList<Post> postArrayList;
+    private boolean deleteBtnVisible;
 
     // Constructor
-    public PostAdapter(Context context, ArrayList<Post> postArrayList) {
+    public PostAdapter(Context context, ArrayList<Post> postArrayList, boolean deleteBtn) {
         this.context = context;
         this.postArrayList = postArrayList;
+        this.deleteBtnVisible = deleteBtn;
     }
 
-    public PostAdapter(Context context) {
+    public PostAdapter(Context context, boolean deleteBtn) {
         this.context = context;
         this.postArrayList = new ArrayList<>();
+        this.deleteBtnVisible = deleteBtn;
     }
 
     @NonNull
     @Override
     public PostAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // to inflate the layout for each item of recycler view.
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
+        View view;
+        if(deleteBtnVisible)    {
+
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout_deletebtn, parent, false);
+
+        }else{
+
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
+        }
         return new Viewholder(view);
     }
 

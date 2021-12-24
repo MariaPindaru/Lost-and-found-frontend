@@ -24,4 +24,10 @@
     <string name="title_activity_logged_user_main">LoggedUserMainActivity</string>
 
     <string name="register"><u><b><i>Register</i></b></u></string>
+    <string-array name="options">
+        <item>All</item>
+        <item>Lost</item>
+        <item>Found</item>
+    </string-array>
+    <string name="title_activity_add_post">AddPost</string>
 </resources>

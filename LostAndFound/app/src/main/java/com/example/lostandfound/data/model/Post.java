@@ -1,4 +1,4 @@
-package com.example.lostandfound.model;
+package com.example.lostandfound.data.model;
 
 import android.media.Image;
 

@@ -20,6 +20,6 @@
         android:id="@+id/nav_posts"
         android:name="com.example.lostandfound.ui.drawer.myPosts.MyPostsFragment"
         android:label="@string/see_your_posts"
-        tools:layout="@layout/fragment_current" />
+        tools:layout="@layout/fragment_myPosts" />
 
 </navigation>

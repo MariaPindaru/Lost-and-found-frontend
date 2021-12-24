@@ -1,19 +1,41 @@
 package com.example.lostandfound.ui.drawer.myPosts;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.lostandfound.R;
+import com.example.lostandfound.data.model.Post;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 public class MyPostsViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private ArrayList<Post> postArrayList;
+    private MutableLiveData<ArrayList<Post>> postArrayLiveData;
 
     public MyPostsViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is fragment 2");
+
+        postArrayLiveData = new MutableLiveData<>();
+
+        postArrayList = new ArrayList<>();
+
+        Date today = Calendar.getInstance().getTime();
+
+        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
+                today, R.drawable.ic_menu_posts));
+        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
+                today, R.drawable.ic_menu_posts));
+        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
+                today, R.drawable.ic_menu_posts));
+        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
+                today, R.drawable.ic_menu_posts));
+
+        postArrayLiveData.setValue(postArrayList);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public MutableLiveData<ArrayList<Post>> getPosts(){
+        return postArrayLiveData;
     }
 }

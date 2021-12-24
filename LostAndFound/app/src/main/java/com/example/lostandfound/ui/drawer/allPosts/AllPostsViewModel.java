@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.lostandfound.R;
-import com.example.lostandfound.model.Post;
+import com.example.lostandfound.data.model.Post;
 
 import java.util.ArrayList;
 import java.util.Calendar;
