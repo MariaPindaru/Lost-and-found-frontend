@@ -30,4 +30,5 @@
         <item>Found</item>
     </string-array>
     <string name="title_activity_add_post">AddPost</string>
+    <string name="add_post">Add post</string>
 </resources>

@@ -7,8 +7,8 @@ import android.view.Menu;
 import android.widget.Button;
 
 import com.example.lostandfound.R;
+import com.example.lostandfound.addPost.AddPostActivity;
 import com.example.lostandfound.ui.login.LoginActivity;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -41,8 +41,8 @@ public class LoggedUserMainActivity extends AppCompatActivity {
         binding.appBarLoggedUserMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent myIntent = new Intent(LoggedUserMainActivity.this, AddPostActivity.class);
+                LoggedUserMainActivity.this.startActivity(myIntent);
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
