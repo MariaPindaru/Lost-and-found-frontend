@@ -1,4 +1,4 @@
-package com.example.lostandfound.ui.drawer.myPosts;
+package com.example.lostandfound.mainActiviy.drawer.allPosts;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,13 +10,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class MyPostsViewModel extends ViewModel {
+public class AllPostsViewModel extends ViewModel {
 
     private ArrayList<Post> postArrayList;
     private MutableLiveData<ArrayList<Post>> postArrayLiveData;
 
-    public MyPostsViewModel() {
-
+    public AllPostsViewModel() {
         postArrayLiveData = new MutableLiveData<>();
 
         postArrayList = new ArrayList<>();
@@ -38,4 +37,5 @@ public class MyPostsViewModel extends ViewModel {
     public MutableLiveData<ArrayList<Post>> getPosts(){
         return postArrayLiveData;
     }
+
 }

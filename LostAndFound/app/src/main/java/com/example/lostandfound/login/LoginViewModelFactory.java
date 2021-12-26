@@ -1,11 +1,8 @@
-package com.example.lostandfound.ui.login;
+package com.example.lostandfound.login;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
-
-import com.example.lostandfound.data.LoginDataSource;
-import com.example.lostandfound.data.LoginRepository;
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

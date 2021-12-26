@@ -1,4 +1,4 @@
-package com.example.lostandfound.ui.login;
+package com.example.lostandfound.login;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
-import com.example.lostandfound.data.LoginRepository;
-import com.example.lostandfound.data.Result;
 import com.example.lostandfound.data.model.LoggedInUser;
 import com.example.lostandfound.R;
 

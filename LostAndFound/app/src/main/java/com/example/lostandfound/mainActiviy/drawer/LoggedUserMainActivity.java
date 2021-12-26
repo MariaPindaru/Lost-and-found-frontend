@@ -1,14 +1,15 @@
-package com.example.lostandfound.ui.drawer;
+package com.example.lostandfound.mainActiviy.drawer;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.lostandfound.R;
 import com.example.lostandfound.addPost.AddPostActivity;
-import com.example.lostandfound.ui.login.LoginActivity;
+import com.example.lostandfound.login.LoginActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -66,6 +67,7 @@ public class LoggedUserMainActivity extends AppCompatActivity {
             }
         });
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     public void Logout(){

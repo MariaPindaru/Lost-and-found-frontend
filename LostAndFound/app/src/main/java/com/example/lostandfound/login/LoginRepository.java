@@ -1,4 +1,4 @@
-package com.example.lostandfound.data;
+package com.example.lostandfound.login;
 
 import com.example.lostandfound.data.model.LoggedInUser;
 

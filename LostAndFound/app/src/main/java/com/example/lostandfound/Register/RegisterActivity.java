@@ -1,26 +1,24 @@
-package com.example.lostandfound.addPost;
+package com.example.lostandfound.Register;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
 import com.example.lostandfound.R;
 
-public class AddPostActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_post);
+        setContentView(R.layout.activity_register);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        getSupportActionBar().setTitle("Add post");
+        getSupportActionBar().setTitle("Register");
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }

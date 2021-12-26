@@ -1,27 +1,20 @@
-package com.example.lostandfound.data;
+package com.example.lostandfound.login;
 
 import com.example.lostandfound.data.model.LoggedInUser;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
-
-import database.SQLConnection;
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.

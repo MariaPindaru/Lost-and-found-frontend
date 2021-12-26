@@ -1,4 +1,4 @@
-package com.example.lostandfound.ui.drawer.myPosts;
+package com.example.lostandfound.mainActiviy.drawer.allPosts;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,30 +15,30 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lostandfound.R;
-import com.example.lostandfound.databinding.FragmentMypostsBinding;
+import com.example.lostandfound.databinding.FragmentAllBinding;
 import com.example.lostandfound.data.model.Post;
-import com.example.lostandfound.ui.drawer.PostAdapter;
+import com.example.lostandfound.mainActiviy.drawer.PostAdapter;
 
 import java.util.ArrayList;
 
-public class MyPostsFragment extends Fragment {
+public class AllPostsFragment extends Fragment {
 
-    private MyPostsViewModel myPostsViewModel;
-    private FragmentMypostsBinding binding;
+    private AllPostsViewModel allPostsViewModel;
+    private FragmentAllBinding binding;
 
     private RecyclerView postRV;
     private PostAdapter postAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        myPostsViewModel =
-                new ViewModelProvider(this).get(MyPostsViewModel.class);
+        allPostsViewModel =
+                new ViewModelProvider(requireActivity()).get(AllPostsViewModel.class);
 
-        binding = FragmentMypostsBinding.inflate(inflater, container, false);
+        binding = FragmentAllBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         postRV = root.findViewById(R.id.idRV);
-        postAdapter = new PostAdapter(getContext(), true);
+        postAdapter = new PostAdapter(getContext(), false);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         postRV.setLayoutManager(linearLayoutManager);
@@ -52,7 +52,7 @@ public class MyPostsFragment extends Fragment {
             }
         };
 
-        myPostsViewModel.getPosts().observe(getViewLifecycleOwner(), userListUpdateObserver);
+        allPostsViewModel.getPosts().observe(getViewLifecycleOwner(), userListUpdateObserver);
 
         Spinner spinner = (Spinner) root.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
@@ -62,6 +62,8 @@ public class MyPostsFragment extends Fragment {
 
         return root;
     }
+
+
 
     @Override
     public void onDestroyView() {

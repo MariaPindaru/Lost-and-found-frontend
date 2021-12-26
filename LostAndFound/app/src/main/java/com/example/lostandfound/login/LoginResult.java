@@ -1,4 +1,4 @@
-package com.example.lostandfound.ui.login;
+package com.example.lostandfound.login;
 
 import androidx.annotation.Nullable;
 
