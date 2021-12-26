@@ -1,12 +1,18 @@
 package com.example.lostandfound.mainActiviy.drawer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lostandfound.R;
@@ -40,11 +46,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
     public PostAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // to inflate the layout for each item of recycler view.
         View view;
-        if(deleteBtnVisible)    {
+        if (deleteBtnVisible) {
 
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout_deletebtn, parent, false);
 
-        }else{
+        } else {
 
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
         }
@@ -63,6 +69,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
         holder.postLocationTV.setText(model.getLocation());
         holder.postDateTV.setText(df.format(model.getDate()));
         holder.postImageIV.setImageResource(model.getImage());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
     }
 
     @Override
@@ -79,7 +92,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
     }
 
     // View holder class for initializing of
-    // your views such as TextView and Imageview.
+// your views such as TextView and Imageview.
     public class Viewholder extends RecyclerView.ViewHolder {
         private ImageView postImageIV;
         private TextView postTitleTV;
