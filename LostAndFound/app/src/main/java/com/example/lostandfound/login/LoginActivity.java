@@ -12,8 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.JsonWriter;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -28,6 +31,18 @@ import com.example.lostandfound.Register.RegisterActivity;
 import com.example.lostandfound.mainActiviy.drawer.LoggedUserMainActivity;
 import com.example.lostandfound.R;
 import com.example.lostandfound.databinding.ActivityLoginBinding;
+
+import org.json.JSONArray;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -127,6 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
+
         });
 
         registerButton.setOnClickListener(new View.OnClickListener() {

@@ -1,4 +1,4 @@
-package com.example.lostandfound.addPost;
+package com.example.lostandfound.map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

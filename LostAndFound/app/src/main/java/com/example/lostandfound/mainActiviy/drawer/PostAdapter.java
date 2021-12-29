@@ -16,7 +16,10 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lostandfound.R;
+import com.example.lostandfound.Register.RegisterActivity;
+import com.example.lostandfound.ViewPost.ViewPostActivity;
 import com.example.lostandfound.data.model.Post;
+import com.example.lostandfound.login.LoginActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -73,7 +76,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                Intent myIntent = new Intent(v.getContext(), ViewPostActivity.class);
+                v.getContext().startActivity(myIntent);
             }
         });
     }
