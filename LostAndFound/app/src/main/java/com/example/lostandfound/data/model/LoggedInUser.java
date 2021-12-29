@@ -5,19 +5,29 @@ package com.example.lostandfound.data.model;
  */
 public class LoggedInUser {
 
-    private String userId;
-    private String displayName;
+    private String id;
+    private String username;
+    private String password;
+
+    public LoggedInUser() {
+    }
+
+    public LoggedInUser(String id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
 
     public LoggedInUser(String userId, String displayName) {
-        this.userId = userId;
-        this.displayName = displayName;
+        this.id = userId;
+        this.username = displayName;
     }
 
     public String getUserId() {
-        return userId;
+        return id;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public String getUsername() {
+        return username;
     }
 }
