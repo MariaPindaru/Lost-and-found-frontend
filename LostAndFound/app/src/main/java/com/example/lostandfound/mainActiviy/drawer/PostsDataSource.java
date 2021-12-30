@@ -2,7 +2,7 @@ package com.example.lostandfound.mainActiviy.drawer;
 
 import android.os.StrictMode;
 
-import com.example.lostandfound.data.model.LoggedInUser;
+import com.example.lostandfound.data.model.User;
 import com.example.lostandfound.data.model.Post;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -14,11 +14,10 @@ import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class PostsDataSource {
-    public ArrayList<Post> getUserPosts(LoggedInUser user) {
+    public ArrayList<Post> getUserPosts(User user) {
         ArrayList<Post> posts = new ArrayList<>();
 
         for (Post post : getPosts()) {

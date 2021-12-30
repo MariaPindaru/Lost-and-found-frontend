@@ -1,6 +1,6 @@
 package com.example.lostandfound.login;
 
-import com.example.lostandfound.data.model.LoggedInUser;
+import com.example.lostandfound.data.model.User;
 import com.example.lostandfound.data.model.UserDetails;
 
 /**
@@ -12,7 +12,7 @@ public class LoginRepository {
     private static volatile LoginRepository instance;
     private String token;
     private LoginDataSource dataSource;
-    private LoggedInUser user = null;
+    private User user = null;
     private UserDetails details = null;
 
     public UserDetails getDetails() {
@@ -31,7 +31,7 @@ public class LoginRepository {
         this.token = token;
     }
 
-    public LoggedInUser getUser() {
+    public User getUser() {
         return user;
     }
 
@@ -56,26 +56,26 @@ public class LoginRepository {
         dataSource.logout();
     }
 
-    public void setLoggedInUser(LoggedInUser user) {
+    public void setLoggedInUser(User user) {
         this.user = user;
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
     }
 
-    public Result<LoggedInUser> login(String username, String password) {
+    public Result<User> login(String username, String password) {
         // handle login
-        Result<LoggedInUser> result = dataSource.login(username, password);
+        Result<User> result = dataSource.login(username, password);
         if (result instanceof Result.Success) {
-            setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
+            setLoggedInUser(((Result.Success<User>) result).getData());
         }
         return result;
     }
 
-    public Result<LoggedInUser> register(String username, String password) {
+    public Result<User> register(String username, String password) {
         // handle login
-        Result<LoggedInUser> result = dataSource.register(username, password);
+        Result<User> result = dataSource.register(username, password);
         if (result instanceof Result.Success) {
-            setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
+            setLoggedInUser(((Result.Success<User>) result).getData());
         }
         return result;
     }

@@ -2,7 +2,7 @@ package com.example.lostandfound.login;
 
 import android.os.StrictMode;
 
-import com.example.lostandfound.data.model.LoggedInUser;
+import com.example.lostandfound.data.model.User;
 import com.example.lostandfound.data.model.UserDetails;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -24,7 +24,7 @@ import okhttp3.Response;
  */
 public class LoginDataSource {
 
-    public Result<LoggedInUser> login(String username, String password) {
+    public Result<User> login(String username, String password) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
@@ -49,7 +49,7 @@ public class LoginDataSource {
                 storeToken(jsonData);
 
                 //store current user
-                LoggedInUser user = getCurrentUser(jsonData);
+                User user = getCurrentUser(jsonData);
                 UserDetails userDetails = getCurrentUserDetails(jsonData);
 
                 LoginRepository.getInstance(this).setLoggedInUser(user);
@@ -64,7 +64,7 @@ public class LoginDataSource {
         return new Result.Error(new IOException("Error logging in"));
     }
 
-    public Result<LoggedInUser> register(String username, String password) {
+    public Result<User> register(String username, String password) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
@@ -89,7 +89,7 @@ public class LoginDataSource {
                 storeToken(jsonData);
 
                 //store current user
-                LoggedInUser user = getCurrentUser(jsonData);
+                User user = getCurrentUser(jsonData);
                 LoginRepository.getInstance(this).setLoggedInUser(user);
                 return new Result.Success<>(user);
 
@@ -111,7 +111,7 @@ public class LoginDataSource {
         LoginRepository.getInstance(this).setToken(token);
     }
 
-    private LoggedInUser getCurrentUser(String jsonData) throws JSONException, IOException {
+    private User getCurrentUser(String jsonData) throws JSONException, IOException {
         JSONObject jsonObject = new JSONObject(jsonData);
 
         OkHttpClient client = new OkHttpClient();
@@ -123,10 +123,10 @@ public class LoginDataSource {
 
         Gson gson = new Gson();
         jsonData = response.body().string();
-        Type type = new TypeToken<LoggedInUser>() {
+        Type type = new TypeToken<User>() {
         }.getType();
 
-        LoggedInUser user = gson.fromJson(jsonData, type);
+        User user = gson.fromJson(jsonData, type);
         return user;
     }
 

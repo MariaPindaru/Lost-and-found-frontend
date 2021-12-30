@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.lostandfound.R;
-import com.example.lostandfound.data.model.LoggedInUser;
+import com.example.lostandfound.data.model.User;
 import com.example.lostandfound.login.LoginRepository;
 import com.example.lostandfound.login.Result;
 
@@ -30,10 +30,10 @@ public class RegisterViewModel extends ViewModel {
 
     public void register(String username, String password) {
         // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.register(username, password);
+        Result<User> result = loginRepository.register(username, password);
 
         if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
+            User data = ((Result.Success<User>) result).getData();
             registerResult.setValue(new RegisterResult(new RegisterView(data.getUsername())));
         } else {
             registerResult.setValue(new RegisterResult(R.string.login_failed));
