@@ -2,6 +2,9 @@ package com.example.lostandfound.mainActiviy.drawer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -20,9 +24,13 @@ import com.example.lostandfound.Register.RegisterActivity;
 import com.example.lostandfound.ViewPost.ViewPostActivity;
 import com.example.lostandfound.data.model.Post;
 import com.example.lostandfound.login.LoginActivity;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.TemporalField;
 import java.util.ArrayList;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Viewholder> {
@@ -60,17 +68,31 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Viewholder> 
         return new Viewholder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull PostsAdapter.Viewholder holder, int position) {
         // to set data to textview and imageview of each card layout
-        Post model = postArrayList.get(position);
+        Post post = postArrayList.get(position);
 
         String pattern = "MM/dd/yyyy";
         DateFormat df = new SimpleDateFormat(pattern);
 
-        holder.postTitleTV.setText(model.getTitle());
-        holder.postLocationTV.setText(model.getLocation());
-        holder.postDateTV.setText(df.format(model.getDate()));
+        holder.postTitleTV.setText(post.getTitle());
+        holder.postLocationTV.setText(post.getLocation());
+        holder.postDateTV.setText(df.format(post.getDate()));
+
+        String image = post.getImage();
+        System.out.println(post.getImage());
+        Picasso.get().load(post.getImage()).into(holder.postImageIV);
+
+
+//        if(imgFile.exists()){
+//
+//            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+//
+//            holder.postImageIV.setImageBitmap(myBitmap);
+//
+//        }
         //holder.postImageIV.setImageResource(model.getImage());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

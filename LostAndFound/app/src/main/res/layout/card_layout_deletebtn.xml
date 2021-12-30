@@ -23,7 +23,7 @@
             android:layout_margin="10dp"
             android:contentDescription="@string/app_name"
             android:padding="5dp"
-            android:src="@android:drawable/stat_notify_error" />
+            android:src="@android:drawable/btn_dialog" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,6 +55,7 @@
                     android:layout_width="0dp"
                     android:textSize="8dp"
                     android:text="delete"
+                    android:textColorLink="@color/black"
                     android:textAlignment="center"
                     android:drawableRight="@android:drawable/ic_menu_delete"
                     />

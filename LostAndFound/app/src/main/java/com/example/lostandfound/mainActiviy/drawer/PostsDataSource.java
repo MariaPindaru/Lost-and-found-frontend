@@ -28,7 +28,7 @@ public class PostsDataSource {
 
         OkHttpClient client = new OkHttpClient();
 
-        String url = "http://10.0.2.2:3000/posts";//"http://10.0.2.2:3000/register";
+        String url = "http://10.0.2.2:3000/posts";
         MediaType JSON
                 = MediaType.get("application/json; charset=utf-8");
         Request request = new Request.Builder()

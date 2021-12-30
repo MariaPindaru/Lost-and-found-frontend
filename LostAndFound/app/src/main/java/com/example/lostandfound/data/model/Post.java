@@ -13,6 +13,7 @@ public class Post {
     private String description;
     private String location;
     private Date date;
+    private String picture;// = new String("https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png");
 
     public Post(String id, String user_id, String title, String type, String description, String location, Date date, String image) {
         this.id = id;
@@ -22,16 +23,15 @@ public class Post {
         this.description = description;
         this.location = location;
         this.date = date;
-        this.image = image;
+        this.picture = image;
     }
 
-    private String image;
 
     // Constructor
     public Post(String title, String description, String course_image) {
         this.title = title;
         this.description = description;
-        this.image = course_image;
+        this.picture = course_image;
     }
 
     public Post(String title, String description, String location, Date date, String image) {
@@ -39,7 +39,7 @@ public class Post {
         this.description = description;
         this.location = location;
         this.date = date;
-        this.image = image;
+        this.picture = image;
     }
 
     // Getter and Setter
@@ -76,10 +76,10 @@ public class Post {
     }
 
     public String getImage() {
-        return image;
+        return picture;
     }
 
     public void setImage(String image) {
-        this.image = image;
+        this.picture = image;
     }
 }
