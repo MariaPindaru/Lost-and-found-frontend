@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.lostandfound.R;
 import com.example.lostandfound.databinding.FragmentMypostsBinding;
 import com.example.lostandfound.data.model.Post;
-import com.example.lostandfound.mainActiviy.drawer.PostAdapter;
+import com.example.lostandfound.mainActiviy.drawer.PostsAdapter;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class MyPostsFragment extends Fragment {
     private FragmentMypostsBinding binding;
 
     private RecyclerView postRV;
-    private PostAdapter postAdapter;
+    private PostsAdapter postAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class MyPostsFragment extends Fragment {
         View root = binding.getRoot();
 
         postRV = root.findViewById(R.id.idRV);
-        postAdapter = new PostAdapter(getContext(), true);
+        postAdapter = new PostsAdapter(getContext(), true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         postRV.setLayoutManager(linearLayoutManager);

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.lostandfound.R;
 import com.example.lostandfound.data.model.Post;
+import com.example.lostandfound.mainActiviy.drawer.PostsDataSource;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,6 +16,8 @@ public class MyPostsViewModel extends ViewModel {
     private ArrayList<Post> postArrayList;
     private MutableLiveData<ArrayList<Post>> postArrayLiveData;
 
+    PostsDataSource postsDataSource;
+
     public MyPostsViewModel() {
 
         postArrayLiveData = new MutableLiveData<>();
@@ -23,14 +26,17 @@ public class MyPostsViewModel extends ViewModel {
 
         Date today = Calendar.getInstance().getTime();
 
-        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
-                today, R.drawable.ic_menu_posts));
-        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
-                today, R.drawable.ic_menu_posts));
-        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
-                today, R.drawable.ic_menu_posts));
-        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
-                today, R.drawable.ic_menu_posts));
+        postsDataSource = new PostsDataSource();
+        postArrayList = postsDataSource.getPosts();
+
+//        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
+//                today, R.drawable.ic_menu_posts));
+//        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
+//                today, R.drawable.ic_menu_posts));
+//        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
+//                today, R.drawable.ic_menu_posts));
+//        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
+//                today, R.drawable.ic_menu_posts));
 
         postArrayLiveData.setValue(postArrayList);
     }

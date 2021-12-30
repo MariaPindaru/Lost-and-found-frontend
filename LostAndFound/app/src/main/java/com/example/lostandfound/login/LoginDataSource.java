@@ -49,7 +49,7 @@ public class LoginDataSource {
 
         OkHttpClient client = new OkHttpClient();
 
-        String url =  "http://192.168.1.8:3000/login";//"http://10.0.2.2:3000/login";
+        String url =  "http://10.0.2.2:3000/login";//"http://192.168.1.8:3000/login";
         MediaType JSON
                 = MediaType.get("application/json; charset=utf-8");
         Request request = new Request.Builder()
@@ -85,7 +85,7 @@ public class LoginDataSource {
 
         OkHttpClient client = new OkHttpClient();
 
-        String url = "http://192.168.1.8:3000/register";//"http://10.0.2.2:3000/register";
+        String url = "http://10.0.2.2:3000/register";//"http://10.0.2.2:3000/register";
         MediaType JSON
                 = MediaType.get("application/json; charset=utf-8");
         Request request = new Request.Builder()
@@ -129,7 +129,7 @@ public class LoginDataSource {
         JSONObject jsonObject = new JSONObject(jsonData);
 
         OkHttpClient client = new OkHttpClient();
-        String url = "http://192.168.1.8:3000/users/" + jsonObject.getInt("userId");
+        String url = "http://10.0.2.2:3000/users/" + jsonObject.getInt("userId");
         Request request = new Request.Builder()
                 .url(url)
                 .build();

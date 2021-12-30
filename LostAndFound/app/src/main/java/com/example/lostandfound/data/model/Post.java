@@ -6,20 +6,35 @@ import java.util.Date;
 
 public class Post {
 
+    private String id;
+    private String user_id;
     private String title;
+    private String type;
     private String description;
     private String location;
     private Date date;
-    private int image;
+
+    public Post(String id, String user_id, String title, String type, String description, String location, Date date, String image) {
+        this.id = id;
+        this.user_id = user_id;
+        this.title = title;
+        this.type = type;
+        this.description = description;
+        this.location = location;
+        this.date = date;
+        this.image = image;
+    }
+
+    private String image;
 
     // Constructor
-    public Post(String title, String description, int course_image) {
+    public Post(String title, String description, String course_image) {
         this.title = title;
         this.description = description;
         this.image = course_image;
     }
 
-    public Post(String title, String description, String location, Date date, int image) {
+    public Post(String title, String description, String location, Date date, String image) {
         this.title = title;
         this.description = description;
         this.location = location;
@@ -60,11 +75,11 @@ public class Post {
         this.date = date;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

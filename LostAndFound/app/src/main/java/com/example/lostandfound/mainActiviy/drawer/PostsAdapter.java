@@ -25,20 +25,20 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
+public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Viewholder> {
 
     private Context context;
     private ArrayList<Post> postArrayList;
     private boolean deleteBtnVisible;
 
     // Constructor
-    public PostAdapter(Context context, ArrayList<Post> postArrayList, boolean deleteBtn) {
+    public PostsAdapter(Context context, ArrayList<Post> postArrayList, boolean deleteBtn) {
         this.context = context;
         this.postArrayList = postArrayList;
         this.deleteBtnVisible = deleteBtn;
     }
 
-    public PostAdapter(Context context, boolean deleteBtn) {
+    public PostsAdapter(Context context, boolean deleteBtn) {
         this.context = context;
         this.postArrayList = new ArrayList<>();
         this.deleteBtnVisible = deleteBtn;
@@ -46,7 +46,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
 
     @NonNull
     @Override
-    public PostAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PostsAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // to inflate the layout for each item of recycler view.
         View view;
         if (deleteBtnVisible) {
@@ -61,7 +61,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostAdapter.Viewholder holder, int position) {
+    public void onBindViewHolder(@NonNull PostsAdapter.Viewholder holder, int position) {
         // to set data to textview and imageview of each card layout
         Post model = postArrayList.get(position);
 
@@ -71,7 +71,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.Viewholder> {
         holder.postTitleTV.setText(model.getTitle());
         holder.postLocationTV.setText(model.getLocation());
         holder.postDateTV.setText(df.format(model.getDate()));
-        holder.postImageIV.setImageResource(model.getImage());
+        //holder.postImageIV.setImageResource(model.getImage());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
