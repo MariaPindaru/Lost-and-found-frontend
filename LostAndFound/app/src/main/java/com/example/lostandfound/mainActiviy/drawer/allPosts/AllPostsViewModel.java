@@ -27,15 +27,6 @@ public class AllPostsViewModel extends ViewModel {
         postsDataSource = new PostsDataSource();
         postArrayList = postsDataSource.getPosts();
 
-//        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
-//                today));
-//        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
-//                today));
-//        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
-//                today));
-//        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
-//                today));
-
         postArrayLiveData.setValue(postArrayList);
     }
 

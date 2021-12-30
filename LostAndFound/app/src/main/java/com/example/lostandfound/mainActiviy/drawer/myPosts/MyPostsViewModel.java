@@ -4,7 +4,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.lostandfound.R;
+import com.example.lostandfound.data.model.LoggedInUser;
 import com.example.lostandfound.data.model.Post;
+import com.example.lostandfound.login.LoginRepository;
 import com.example.lostandfound.mainActiviy.drawer.PostsDataSource;
 
 import java.util.ArrayList;
@@ -27,16 +29,8 @@ public class MyPostsViewModel extends ViewModel {
         Date today = Calendar.getInstance().getTime();
 
         postsDataSource = new PostsDataSource();
-        postArrayList = postsDataSource.getPosts();
-
-//        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
-//                today, R.drawable.ic_menu_posts));
-//        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
-//                today, R.drawable.ic_menu_posts));
-//        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
-//                today, R.drawable.ic_menu_posts));
-//        postArrayList.add(new Post("Post 1", "blablagf", "Brasov, Brasov",
-//                today, R.drawable.ic_menu_posts));
+        LoggedInUser user = LoginRepository.getInstance(null).getUser();
+        postArrayList = postsDataSource.getUserPosts(user);
 
         postArrayLiveData.setValue(postArrayList);
     }

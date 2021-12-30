@@ -18,7 +18,20 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class PostsDataSource {
-    public  ArrayList<Post> getPosts() {
+    public ArrayList<Post> getUserPosts(LoggedInUser user) {
+        ArrayList<Post> posts = new ArrayList<>();
+
+        for (Post post : getPosts()) {
+            if (post.getUser_id().equals(user.getUserId())) {
+                posts.add(post);
+            }
+        }
+
+        return posts;
+    }
+
+
+    public ArrayList<Post> getPosts() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);

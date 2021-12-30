@@ -1,36 +1,18 @@
 package com.example.lostandfound.login;
 
 import android.os.StrictMode;
-import android.util.Log;
-import android.view.View;
 
 import com.example.lostandfound.data.model.LoggedInUser;
+import com.example.lostandfound.data.model.UserDetails;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import javax.net.ssl.HttpsURLConnection;
-
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -67,8 +49,12 @@ public class LoginDataSource {
                 storeToken(jsonData);
 
                 //store current user
-                LoggedInUser user = storeCurrentUser(jsonData);
+                LoggedInUser user = getCurrentUser(jsonData);
+                UserDetails userDetails = getCurrentUserDetails(jsonData);
+
                 LoginRepository.getInstance(this).setLoggedInUser(user);
+                LoginRepository.getInstance(this).setDetails(userDetails);
+
                 return new Result.Success<>(user);
             }
         } catch (Exception e) {
@@ -103,7 +89,7 @@ public class LoginDataSource {
                 storeToken(jsonData);
 
                 //store current user
-                LoggedInUser user = storeCurrentUser(jsonData);
+                LoggedInUser user = getCurrentUser(jsonData);
                 LoginRepository.getInstance(this).setLoggedInUser(user);
                 return new Result.Success<>(user);
 
@@ -125,7 +111,7 @@ public class LoginDataSource {
         LoginRepository.getInstance(this).setToken(token);
     }
 
-    private LoggedInUser storeCurrentUser(String jsonData) throws JSONException, IOException {
+    private LoggedInUser getCurrentUser(String jsonData) throws JSONException, IOException {
         JSONObject jsonObject = new JSONObject(jsonData);
 
         OkHttpClient client = new OkHttpClient();
@@ -141,6 +127,25 @@ public class LoginDataSource {
         }.getType();
 
         LoggedInUser user = gson.fromJson(jsonData, type);
+        return user;
+    }
+
+    private UserDetails getCurrentUserDetails(String jsonData) throws JSONException, IOException {
+        JSONObject jsonObject = new JSONObject(jsonData);
+
+        OkHttpClient client = new OkHttpClient();
+        String url = "http://10.0.2.2:3000/usersdetails/" + jsonObject.getInt("userId");
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        Response response = client.newCall(request).execute();
+
+        Gson gson = new Gson();
+        jsonData = response.body().string();
+        Type type = new TypeToken<UserDetails>() {
+        }.getType();
+
+        UserDetails user = gson.fromJson(jsonData, type);
         return user;
     }
 }

@@ -81,19 +81,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Viewholder> 
         holder.postLocationTV.setText(post.getLocation());
         holder.postDateTV.setText(df.format(post.getDate()));
 
-        String image = post.getImage();
-        System.out.println(post.getImage());
-        Picasso.get().load(post.getImage()).into(holder.postImageIV);
-
-
-//        if(imgFile.exists()){
-//
-//            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-//
-//            holder.postImageIV.setImageBitmap(myBitmap);
-//
-//        }
-        //holder.postImageIV.setImageResource(model.getImage());
+        String image = post.getPicture();
+        System.out.println(post.getPicture());
+        Picasso.get().load(post.getPicture()).into(holder.postImageIV);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

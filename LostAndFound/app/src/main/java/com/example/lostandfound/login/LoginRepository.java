@@ -1,6 +1,7 @@
 package com.example.lostandfound.login;
 
 import com.example.lostandfound.data.model.LoggedInUser;
+import com.example.lostandfound.data.model.UserDetails;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -11,6 +12,16 @@ public class LoginRepository {
     private static volatile LoginRepository instance;
     private String token;
     private LoginDataSource dataSource;
+    private LoggedInUser user = null;
+    private UserDetails details = null;
+
+    public UserDetails getDetails() {
+        return details;
+    }
+
+    public void setDetails(UserDetails details) {
+        this.details = details;
+    }
 
     public String getToken() {
         return token;
@@ -23,10 +34,6 @@ public class LoginRepository {
     public LoggedInUser getUser() {
         return user;
     }
-
-    // If user credentials will be cached in local storage, it is recommended it be encrypted
-    // @see https://developer.android.com/training/articles/keystore
-    private LoggedInUser user = null;
 
     // private constructor : singleton access
     private LoginRepository(LoginDataSource dataSource) {
@@ -71,5 +78,9 @@ public class LoginRepository {
             setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
         }
         return result;
+    }
+
+    public LoginDataSource getDataSource() {
+        return dataSource;
     }
 }
