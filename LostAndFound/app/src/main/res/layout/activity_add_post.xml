@@ -14,6 +14,16 @@
         android:layout_height="300dp"
         android:layout_alignParentTop="true" />
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/idSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="#BFBFBF"
+        android:elevation="5dp"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search Here" />
+
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"

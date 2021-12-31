@@ -21,9 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lostandfound.R;
 import com.example.lostandfound.Register.RegisterActivity;
-import com.example.lostandfound.ViewPost.ViewPostActivity;
 import com.example.lostandfound.data.model.Post;
 import com.example.lostandfound.login.LoginActivity;
+import com.example.lostandfound.mainActiviy.ViewPostFragment;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -88,8 +88,20 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Viewholder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), ViewPostActivity.class);
-                v.getContext().startActivity(myIntent);
+                Context context = v.getContext();
+                Intent intent = new Intent();
+//                switch (holder.getAdapterPosition()) {
+//                    case 0:
+                        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                        activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+                        activity.getSupportActionBar().setTitle("Post details");
+                        ViewPostFragment myFragment = new ViewPostFragment();
+                        myFragment.setCurrentPost(postArrayList.get(position));
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.drawer_layout, myFragment).addToBackStack(null).commit();
+//                        break;
+//                }
             }
         });
     }
