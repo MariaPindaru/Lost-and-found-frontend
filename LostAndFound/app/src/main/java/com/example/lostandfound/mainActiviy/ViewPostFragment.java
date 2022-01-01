@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lostandfound.R;
@@ -14,6 +15,8 @@ import com.example.lostandfound.data.model.Post;
 import com.example.lostandfound.databinding.FragmentAllBinding;
 import com.example.lostandfound.databinding.FragmentViewPostBinding;
 import com.example.lostandfound.login.LoginRepository;
+import com.example.lostandfound.mainActiviy.drawer.PostsDataSource;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,15 +33,7 @@ public class ViewPostFragment extends Fragment {
     private TextView phone;
     private TextView email;
     private TextView date;
-
-    public Post getCurrentPost() {
-        return currentPost;
-    }
-
-    public void setCurrentPost(Post currentPost) {
-
-        this.currentPost = currentPost;
-    }
+    private ImageView image;
 
     public ViewPostFragment() {
         // Required empty public constructor
@@ -67,14 +62,23 @@ public class ViewPostFragment extends Fragment {
         phone = root.findViewById(R.id.phone);
         email = root.findViewById(R.id.email);
         date = root.findViewById(R.id.date);
+        image = root.findViewById(R.id.image);
 
-        title.setText(this.currentPost.getTitle());
-        description.setText(this.currentPost.getDescription());
-        address.setText(this.currentPost.getLocation());
-        date.setText(this.currentPost.getDate().toString());
+        Bundle args = getArguments();
+        assert args != null;
+        this.currentPost = (Post) args.getSerializable("CurrentPost");
 
-        phone.setText(LoginRepository.getInstance(null).getDetails().getPhone_number());
-        email.setText(LoginRepository.getInstance(null).getDetails().getEmail_address());
+        if (this.currentPost != null) {
+            title.setText(this.currentPost.getTitle());
+            description.setText(this.currentPost.getDescription());
+            address.setText(this.currentPost.getLocation());
+            date.setText(this.currentPost.getDate().toString());
+
+            phone.setText(LoginRepository.getInstance(null).getDetails().getPhone_number());
+            email.setText(LoginRepository.getInstance(null).getDetails().getEmail_address());
+
+            Picasso.get().load(this.currentPost.getPicture()).into(image);
+        }
 
         return root;
     }

@@ -2,17 +2,13 @@ package com.example.lostandfound.mainActiviy.drawer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.lostandfound.R;
-import com.example.lostandfound.addPost.AddPostActivity;
 import com.example.lostandfound.login.LoginActivity;
-import com.example.lostandfound.mainActiviy.ViewPostFragment;
-import com.example.lostandfound.mainActiviy.drawer.allPosts.AllPostsFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -21,7 +17,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lostandfound.databinding.ActivityLoggedUserMainBinding;
 
@@ -29,10 +24,6 @@ public class LoggedUserMainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityLoggedUserMainBinding binding;
-
-//    private static RecyclerView.Adapter adapter;
-//    private RecyclerView.LayoutManager layoutManager;
-//    private static RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +36,9 @@ public class LoggedUserMainActivity extends AppCompatActivity {
         binding.appBarLoggedUserMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(LoggedUserMainActivity.this, AddPostActivity.class);
-                LoggedUserMainActivity.this.startActivity(myIntent);
+                NavController navController = Navigation.findNavController(LoggedUserMainActivity.this, R.id.nav_host_fragment_content_logged_user_main);
+                navController.navigate(R.id.nav_add_post);
+                getSupportActionBar().setTitle("Add post");
             }
         });
         DrawerLayout drawer = binding.drawerLayout;

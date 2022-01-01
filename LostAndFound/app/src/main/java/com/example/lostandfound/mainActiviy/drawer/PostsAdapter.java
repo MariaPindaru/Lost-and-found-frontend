@@ -1,10 +1,12 @@
 package com.example.lostandfound.mainActiviy.drawer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +30,7 @@ import com.example.lostandfound.mainActiviy.ViewPostFragment;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -70,7 +74,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Viewholder> 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onBindViewHolder(@NonNull PostsAdapter.Viewholder holder, int position) {
+    public void onBindViewHolder(@NonNull PostsAdapter.Viewholder holder, @SuppressLint("RecyclerView") int position) {
         // to set data to textview and imageview of each card layout
         Post post = postArrayList.get(position);
 
@@ -81,27 +85,19 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Viewholder> 
         holder.postLocationTV.setText(post.getLocation());
         holder.postDateTV.setText(df.format(post.getDate()));
 
-        String image = post.getPicture();
-        System.out.println(post.getPicture());
         Picasso.get().load(post.getPicture()).into(holder.postImageIV);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = v.getContext();
-                Intent intent = new Intent();
-//                switch (holder.getAdapterPosition()) {
-//                    case 0:
-                        AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                        activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                NavController navController = Navigation.findNavController(activity, R.id.nav_host_fragment_content_logged_user_main);
 
-                        activity.getSupportActionBar().setTitle("Post details");
-                        ViewPostFragment myFragment = new ViewPostFragment();
-                        myFragment.setCurrentPost(postArrayList.get(position));
-                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.drawer_layout, myFragment).addToBackStack(null).commit();
-//                        break;
-//                }
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("CurrentPost", postArrayList.get(position)); // Serializable Object
+                navController.navigate(R.id.nav_view_post, bundle);
+
+                activity.getSupportActionBar().setTitle("Details");
             }
         });
     }

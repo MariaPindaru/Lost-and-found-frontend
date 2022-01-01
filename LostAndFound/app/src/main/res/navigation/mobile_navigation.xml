@@ -22,4 +22,16 @@
         android:label="@string/see_your_posts"
         tools:layout="@layout/fragment_myposts" />
 
+
+    <fragment
+        android:id="@+id/nav_view_post"
+        android:name="com.example.lostandfound.mainActiviy.ViewPostFragment"
+        tools:layout="@layout/fragment_view_post" />
+
+    <fragment
+        android:id="@+id/nav_add_post"
+        android:name="com.example.lostandfound.mainActiviy.AddPostFragment"
+        tools:layout="@layout/fragment_add_post">
+    </fragment>
+
 </navigation>

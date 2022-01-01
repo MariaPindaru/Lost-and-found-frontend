@@ -17,6 +17,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class PostsDataSource {
+
     public ArrayList<Post> getUserPosts(User user) {
         ArrayList<Post> posts = new ArrayList<>();
 

@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class SQLConnection {
     private static String ip =  "192.168.1.5";
     private static String port = "1433";
-    private static String database = "LostAndFound";
+    private static String database = "LostAndFoundDB";
     private static String username = "maria";
     private static String password = "123456";
 

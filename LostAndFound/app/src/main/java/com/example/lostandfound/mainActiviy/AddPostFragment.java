@@ -1,22 +1,21 @@
-package com.example.lostandfound.addPost;
+package com.example.lostandfound.mainActiviy;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
-import android.app.ActionBar;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.WindowManager;
+
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.lostandfound.R;
-import com.example.lostandfound.map.MapsFragment;
+import com.example.lostandfound.databinding.FragmentAddPostBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -25,24 +24,40 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.List;
 
-public class AddPostActivity extends AppCompatActivity {
+
+public class AddPostFragment extends Fragment {
+
+    private FragmentAddPostBinding binding;
 
     private SupportMapFragment mapsFragment;
     private GoogleMap mMap;
     private SearchView searchView;
+    private TextView addressTV;
+
+    public AddPostFragment() {
+        // Required empty public constructor
+    }
+
+    public static AddPostFragment newInstance(String param1, String param2) {
+        AddPostFragment fragment = new AddPostFragment();
+
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_post);
+    }
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentAddPostBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
-        getSupportActionBar().setTitle("Add post");
-
-        searchView = findViewById(R.id.idSearchView);
-        mapsFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        searchView = root.findViewById(R.id.idSearchView);
+        addressTV = root.findViewById(R.id.address);
+        mapsFragment = (SupportMapFragment) getParentFragmentManager().findFragmentById(R.id.map);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -58,7 +73,7 @@ public class AddPostActivity extends AppCompatActivity {
                 // checking if the entered location is null or not.
                 if (location != null || !location.equals("")) {
                     // on below line we are creating and initializing a geo coder.
-                    Geocoder geocoder = new Geocoder(AddPostActivity.this);
+                    Geocoder geocoder = new Geocoder(getActivity());
                     try {
                         // on below line we are getting location from the
                         // location name and adding that location to address list.
@@ -73,6 +88,8 @@ public class AddPostActivity extends AppCompatActivity {
                         return false;
 
                     Address address = addressList.get(0);
+
+                    //addressTV.setText(address.getLocality());
 
                     // on below line we are creating a variable for our location
                     // where we will add our locations latitude and longitude.
@@ -109,18 +126,6 @@ public class AddPostActivity extends AppCompatActivity {
             }
         });
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return root;
     }
 }

@@ -2,9 +2,10 @@ package com.example.lostandfound.data.model;
 
 import android.media.Image;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Post {
+public class Post  implements Serializable {
 
     private String id;
     private String user_id;
