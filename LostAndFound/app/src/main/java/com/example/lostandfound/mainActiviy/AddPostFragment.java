@@ -10,9 +10,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lostandfound.R;
+import com.example.lostandfound.data.model.Post;
 import com.example.lostandfound.databinding.FragmentAddPostBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,6 +23,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,11 +32,14 @@ import java.util.List;
 public class AddPostFragment extends Fragment {
 
     private FragmentAddPostBinding binding;
+    private Post currentPost = null;
 
     private SupportMapFragment mapsFragment;
     private GoogleMap mMap;
     private SearchView searchView;
     private TextView addressTV;
+    private Button upload;
+    private ImageView picture;
 
     public AddPostFragment() {
         // Required empty public constructor
@@ -55,9 +62,16 @@ public class AddPostFragment extends Fragment {
         binding = FragmentAddPostBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        currentPost = new Post();
+
         searchView = root.findViewById(R.id.idSearchView);
         addressTV = root.findViewById(R.id.address);
         mapsFragment = (SupportMapFragment) getParentFragmentManager().findFragmentById(R.id.map);
+        upload = root.findViewById(R.id.upload);
+        picture = root.findViewById(R.id.image);
+
+        Picasso.get().load(this.currentPost.getPicture()).into(picture);
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

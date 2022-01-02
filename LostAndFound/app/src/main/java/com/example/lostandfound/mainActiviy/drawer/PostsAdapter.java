@@ -117,7 +117,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Viewholder> 
 
     // View holder class for initializing of
 // your views such as TextView and Imageview.
-    public class Viewholder extends RecyclerView.ViewHolder {
+    public static class Viewholder extends RecyclerView.ViewHolder {
         private ImageView postImageIV;
         private TextView postTitleTV;
         private TextView postLocationTV;

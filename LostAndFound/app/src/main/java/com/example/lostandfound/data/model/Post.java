@@ -1,8 +1,15 @@
 package com.example.lostandfound.data.model;
 
 import android.media.Image;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Post  implements Serializable {
@@ -25,6 +32,10 @@ public class Post  implements Serializable {
         this.location = location;
         this.date = date;
         this.picture = image;
+    }
+
+    public Post(){
+        this.picture = new String("https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png");
     }
 
 
@@ -106,5 +117,10 @@ public class Post  implements Serializable {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void setCurrentDate(){
+        this.date = Date.from(Instant.now());
     }
 }
