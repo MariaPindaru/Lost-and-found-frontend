@@ -1,12 +1,20 @@
 package com.example.lostandfound.mainActiviy;
 
+import android.app.Activity;
+import android.content.ContextWrapper;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +33,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 
 public class AddPostFragment extends Fragment {
 
+    private static final int SELECT_PICTURE = 200;
     private FragmentAddPostBinding binding;
     private Post currentPost = null;
 
@@ -66,12 +79,19 @@ public class AddPostFragment extends Fragment {
 
         searchView = root.findViewById(R.id.idSearchView);
         addressTV = root.findViewById(R.id.address);
-        mapsFragment = (SupportMapFragment) getParentFragmentManager().findFragmentById(R.id.map);
+        mapsFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         upload = root.findViewById(R.id.upload);
         picture = root.findViewById(R.id.image);
 
         Picasso.get().load(this.currentPost.getPicture()).into(picture);
 
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickImage();
+            }
+
+        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -98,12 +118,10 @@ public class AddPostFragment extends Fragment {
                     // on below line we are getting the location
                     // from our list a first position.
 
-                    if(addressList.isEmpty())
+                    if (addressList.isEmpty())
                         return false;
 
                     Address address = addressList.get(0);
-
-                    //addressTV.setText(address.getLocality());
 
                     // on below line we are creating a variable for our location
                     // where we will add our locations latitude and longitude.
@@ -121,15 +139,13 @@ public class AddPostFragment extends Fragment {
                          */
                         @Override
                         public void onMapReady(GoogleMap googleMap) {
+
+                            addressTV.setText(address.getLocality() + ", " + address.getCountryName());
+
                             googleMap.addMarker(new MarkerOptions().position(latLng).title(location));
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
                         }
                     });
-                    // on below line we are adding marker to that position.
-                    //mapsFragment.getMap().addMarker(new MarkerOptions().position(latLng).title(location));
-
-                    // below line is to animate camera to that position.
-                    // mapsFragment.getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
                 }
                 return false;
             }
@@ -141,5 +157,54 @@ public class AddPostFragment extends Fragment {
         });
 
         return root;
+    }
+
+    public void pickImage() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+    }
+    //startActivityForResult(intent, 1);
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 200 && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                //Display an error
+                return;
+            }
+
+            Uri selectedImageUri = data.getData();
+            if (null != selectedImageUri) {
+                // update the preview image in the layout
+                try {
+                    Bitmap photo = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImageUri);
+
+                    System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                    System.out.println(selectedImageUri);
+                    System.out.println(photo);
+                    createDirectoryAndSaveFile(photo, "haha");
+                    picture.setImageURI(selectedImageUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void createDirectoryAndSaveFile(Bitmap imageToSave, String fileName) throws IOException {
+        String file_path = "C:\\Users\\maria\\AndroidStudioProjects";
+        File dir = new File(file_path);
+        if(!dir.exists())
+            dir.mkdirs();
+//        File file = new File(dir, "aa");
+        FileOutputStream fOut = new FileOutputStream(dir);
+
+        imageToSave.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+        fOut.flush();
+        fOut.close();
     }
 }

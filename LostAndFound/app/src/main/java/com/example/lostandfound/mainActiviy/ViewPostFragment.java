@@ -16,6 +16,12 @@ import com.example.lostandfound.databinding.FragmentAllBinding;
 import com.example.lostandfound.databinding.FragmentViewPostBinding;
 import com.example.lostandfound.login.LoginRepository;
 import com.example.lostandfound.mainActiviy.drawer.PostsDataSource;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -26,7 +32,9 @@ import com.squareup.picasso.Picasso;
 public class ViewPostFragment extends Fragment {
 
     private Post currentPost;
+
     private FragmentViewPostBinding binding;
+
     private TextView title;
     private TextView description;
     private TextView address;
@@ -34,6 +42,8 @@ public class ViewPostFragment extends Fragment {
     private TextView email;
     private TextView date;
     private ImageView image;
+
+    private SupportMapFragment mapsFragment;
 
     public ViewPostFragment() {
         // Required empty public constructor
@@ -63,6 +73,20 @@ public class ViewPostFragment extends Fragment {
         email = root.findViewById(R.id.email);
         date = root.findViewById(R.id.date);
         image = root.findViewById(R.id.image);
+
+        mapsFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapsFragment.getMapAsync(new OnMapReadyCallback() {
+
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+
+                LatLng latLng = new LatLng(45.788482223949934, 24.087307906073168);
+
+
+                googleMap.addMarker(new MarkerOptions().position(latLng).title("Location"));
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+            }
+        });
 
         Bundle args = getArguments();
         assert args != null;
