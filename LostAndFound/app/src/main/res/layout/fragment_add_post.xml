@@ -43,6 +43,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Type" />
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="200dp"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Address" />
 
             <EditText
@@ -75,21 +84,21 @@
                 android:text="aaa" />
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Picture" />
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Picture" />-->
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="100dp"
-                android:layout_height="100dp" />
+<!--            <ImageView-->
+<!--                android:id="@+id/image"-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="100dp" />-->
 
-            <Button
-                android:id="@+id/upload"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="Upload" />
+<!--            <Button-->
+<!--                android:id="@+id/upload"-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Upload" />-->
 
             <Button
                 android:id="@+id/addPostBtn"

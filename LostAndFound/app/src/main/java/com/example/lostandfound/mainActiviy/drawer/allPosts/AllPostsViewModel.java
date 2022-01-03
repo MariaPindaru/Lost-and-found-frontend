@@ -23,7 +23,6 @@ public class AllPostsViewModel extends ViewModel {
 
         postArrayList = new ArrayList<>();
 
-        Date today = Calendar.getInstance().getTime();
         postsDataSource = new PostsDataSource();
         postArrayList = postsDataSource.getPosts();
 

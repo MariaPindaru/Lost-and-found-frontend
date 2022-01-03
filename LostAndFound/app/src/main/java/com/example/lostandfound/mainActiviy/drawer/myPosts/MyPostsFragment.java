@@ -27,7 +27,7 @@ public class MyPostsFragment extends Fragment {
     private FragmentMypostsBinding binding;
 
     private RecyclerView postRV;
-    private PostsAdapter postAdapter;
+    private static PostsAdapter postAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,6 +61,10 @@ public class MyPostsFragment extends Fragment {
         spinner.setAdapter(adapter);
 
         return root;
+    }
+
+    public static PostsAdapter getPostAdapter() {
+        return postAdapter;
     }
 
     @Override

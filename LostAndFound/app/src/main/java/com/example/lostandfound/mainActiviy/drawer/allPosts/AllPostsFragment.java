@@ -2,6 +2,7 @@ package com.example.lostandfound.mainActiviy.drawer.allPosts;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,7 @@ import com.example.lostandfound.R;
 import com.example.lostandfound.databinding.FragmentAllBinding;
 import com.example.lostandfound.data.model.Post;
 import com.example.lostandfound.mainActiviy.drawer.PostsAdapter;
+import com.example.lostandfound.mainActiviy.drawer.PostsDataSource;
 
 import java.util.ArrayList;
 
@@ -27,7 +29,7 @@ public class AllPostsFragment extends Fragment {
     private FragmentAllBinding binding;
 
     private RecyclerView postRV;
-    private PostsAdapter postAdapter;
+    private static PostsAdapter postAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,7 +65,9 @@ public class AllPostsFragment extends Fragment {
         return root;
     }
 
-
+    public PostsAdapter getPostAdapter(){
+        return postAdapter;
+    }
 
     @Override
     public void onDestroyView() {

@@ -4,41 +4,59 @@ import android.app.Activity;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.lostandfound.R;
 import com.example.lostandfound.data.model.Post;
 import com.example.lostandfound.databinding.FragmentAddPostBinding;
+import com.example.lostandfound.mainActiviy.drawer.PostsDataSource;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Locale;
 
 
 public class AddPostFragment extends Fragment {
@@ -50,9 +68,15 @@ public class AddPostFragment extends Fragment {
     private SupportMapFragment mapsFragment;
     private GoogleMap mMap;
     private SearchView searchView;
+
+    private Button add;
+
+    private TextView titleTV;
+    private TextView descriptionTV;
     private TextView addressTV;
-    private Button upload;
-    private ImageView picture;
+
+    Spinner spinner;
+
 
     public AddPostFragment() {
         // Required empty public constructor
@@ -77,18 +101,38 @@ public class AddPostFragment extends Fragment {
 
         currentPost = new Post();
 
-        searchView = root.findViewById(R.id.idSearchView);
+        spinner = (Spinner) root.findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.addOptions, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
         addressTV = root.findViewById(R.id.address);
+        titleTV = root.findViewById(R.id.title);
+        descriptionTV = root.findViewById(R.id.description);
+
+        searchView = root.findViewById(R.id.idSearchView);
         mapsFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        upload = root.findViewById(R.id.upload);
-        picture = root.findViewById(R.id.image);
+        add = root.findViewById(R.id.addPostBtn);
 
-        Picasso.get().load(this.currentPost.getPicture()).into(picture);
-
-        upload.setOnClickListener(new View.OnClickListener() {
+        add.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                pickImage();
+                currentPost.setTitle(titleTV.getText().toString());
+                currentPost.setDescription(descriptionTV.getText().toString());
+                currentPost.setLocation(addressTV.getText().toString());
+
+                currentPost.setType(spinner.getSelectedItem().toString());
+
+                if(currentPost.getType().toUpperCase(Locale.ROOT).equals("LOST"))
+                    currentPost.setPicture("https://upload.wikimedia.org/wikipedia/commons/2/24/Lost_Black_Wikipedia.png");
+                else
+                    currentPost.setPicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTByL_LAWLDPPU2wgtFR7w1jgCN_bjlkhBLUPVPYDJyBQ9Mnuk72ltxE086HKdqibV8kxI&usqp=CAU");
+
+                currentPost.setCurrentDate();
+
+                new PostsDataSource().addPost(currentPost);
             }
 
         });
@@ -128,15 +172,6 @@ public class AddPostFragment extends Fragment {
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     mapsFragment.getMapAsync(new OnMapReadyCallback() {
 
-                        /**
-                         * Manipulates the map once available.
-                         * This callback is triggered when the map is ready to be used.
-                         * This is where we can add markers or lines, add listeners or move the camera.
-                         * In this case, we just add a marker near Sydney, Australia.
-                         * If Google Play services is not installed on the device, the user will be prompted to
-                         * install it inside the SupportMapFragment. This method will only be triggered once the
-                         * user has installed Google Play services and returned to the app.
-                         */
                         @Override
                         public void onMapReady(GoogleMap googleMap) {
 
@@ -159,52 +194,4 @@ public class AddPostFragment extends Fragment {
         return root;
     }
 
-    public void pickImage() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
-    }
-    //startActivityForResult(intent, 1);
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 200 && resultCode == Activity.RESULT_OK) {
-            if (data == null) {
-                //Display an error
-                return;
-            }
-
-            Uri selectedImageUri = data.getData();
-            if (null != selectedImageUri) {
-                // update the preview image in the layout
-                try {
-                    Bitmap photo = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImageUri);
-
-                    System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                    System.out.println(selectedImageUri);
-                    System.out.println(photo);
-                    createDirectoryAndSaveFile(photo, "haha");
-                    picture.setImageURI(selectedImageUri);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    private void createDirectoryAndSaveFile(Bitmap imageToSave, String fileName) throws IOException {
-        String file_path = "C:\\Users\\maria\\AndroidStudioProjects";
-        File dir = new File(file_path);
-        if(!dir.exists())
-            dir.mkdirs();
-//        File file = new File(dir, "aa");
-        FileOutputStream fOut = new FileOutputStream(dir);
-
-        imageToSave.compress(Bitmap.CompressFormat.PNG, 85, fOut);
-        fOut.flush();
-        fOut.close();
-    }
 }

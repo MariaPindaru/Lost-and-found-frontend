@@ -66,14 +66,12 @@ public class LoginDataSource {
 
     public Result<User> register(String username, String password) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
         StrictMode.setThreadPolicy(policy);
 
         OkHttpClient client = new OkHttpClient();
 
         String url = "http://10.0.2.2:3000/register";//"http://10.0.2.2:3000/register";
-        MediaType JSON
-                = MediaType.get("application/json; charset=utf-8");
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
         Request request = new Request.Builder()
                 .url(url)
                 .post(RequestBody.create("{\"username\":\"" + username +

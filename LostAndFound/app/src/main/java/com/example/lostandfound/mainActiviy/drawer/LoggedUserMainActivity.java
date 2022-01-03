@@ -2,6 +2,7 @@ package com.example.lostandfound.mainActiviy.drawer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.WindowManager;
@@ -9,8 +10,14 @@ import android.widget.Button;
 
 import com.example.lostandfound.R;
 import com.example.lostandfound.login.LoginActivity;
+import com.example.lostandfound.login.LoginRepository;
+import com.example.lostandfound.mainActiviy.AddPostFragment;
+import com.example.lostandfound.mainActiviy.ViewPostFragment;
+import com.example.lostandfound.mainActiviy.drawer.allPosts.AllPostsFragment;
+import com.example.lostandfound.mainActiviy.drawer.myPosts.MyPostsFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -19,6 +26,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lostandfound.databinding.ActivityLoggedUserMainBinding;
+
+import java.util.List;
 
 public class LoggedUserMainActivity extends AppCompatActivity {
 
@@ -65,7 +74,7 @@ public class LoggedUserMainActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
-    public void Logout(){
+    public void Logout() {
         Intent myIntent = new Intent(LoggedUserMainActivity.this, LoginActivity.class);
         LoggedUserMainActivity.this.startActivity(myIntent);
     }
@@ -82,5 +91,18 @@ public class LoggedUserMainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_logged_user_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        new AllPostsFragment().getPostAdapter().updatePostList(new PostsDataSource().getPosts());
+
+        PostsAdapter adapter = new MyPostsFragment().getPostAdapter();
+
+        if (adapter != null)
+            adapter.updatePostList(new PostsDataSource().getUserPosts(LoginRepository.getInstance(null).getUser()));
+
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.lostandfound.mainActiviy;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +26,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +48,7 @@ public class ViewPostFragment extends Fragment {
     private TextView email;
     private TextView date;
     private ImageView image;
+
 
     private SupportMapFragment mapsFragment;
 
@@ -75,18 +82,6 @@ public class ViewPostFragment extends Fragment {
         image = root.findViewById(R.id.image);
 
         mapsFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mapsFragment.getMapAsync(new OnMapReadyCallback() {
-
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-
-                LatLng latLng = new LatLng(45.788482223949934, 24.087307906073168);
-
-
-                googleMap.addMarker(new MarkerOptions().position(latLng).title("Location"));
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-            }
-        });
 
         Bundle args = getArguments();
         assert args != null;
@@ -102,8 +97,49 @@ public class ViewPostFragment extends Fragment {
             email.setText(LoginRepository.getInstance(null).getDetails().getEmail_address());
 
             Picasso.get().load(this.currentPost.getPicture()).into(image);
-        }
 
+            String location = this.currentPost.getLocation();
+
+            // below line is to create a list of address
+            // where we will store the list of all address.
+            List<Address> addressList = null;
+
+            // checking if the entered location is null or not.
+            if (location != null || !location.equals("")) {
+                // on below line we are creating and initializing a geo coder.
+                Geocoder geocoder = new Geocoder(getActivity());
+                try {
+                    // on below line we are getting location from the
+                    // location name and adding that location to address list.
+                    addressList = geocoder.getFromLocationName(location, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                // on below line we are getting the location
+                // from our list a first position.
+
+                if (!addressList.isEmpty()) {
+
+                    Address address = addressList.get(0);
+
+                    // on below line we are creating a variable for our location
+                    // where we will add our locations latitude and longitude.
+                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                    mapsFragment.getMapAsync(new OnMapReadyCallback() {
+
+                        @Override
+                        public void onMapReady(GoogleMap googleMap) {
+
+                            googleMap.addMarker(new MarkerOptions().position(latLng).title(location));
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                        }
+                    });
+
+                }
+
+            }
+        }
         return root;
+
     }
 }

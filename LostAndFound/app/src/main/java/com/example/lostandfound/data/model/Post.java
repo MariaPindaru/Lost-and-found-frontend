@@ -5,6 +5,8 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.lostandfound.login.LoginRepository;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -36,6 +38,7 @@ public class Post  implements Serializable {
 
     public Post(){
         this.picture = new String("https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png");
+        this.user_id = LoginRepository.getInstance(null).getUser().getUserId();
     }
 
 

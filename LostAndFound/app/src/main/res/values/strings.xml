@@ -29,6 +29,10 @@
         <item>Lost</item>
         <item>Found</item>
     </string-array>
+    <string-array name="addOptions">
+        <item>Lost</item>
+        <item>Found</item>
+    </string-array>
     <string name="title_activity_add_post">AddPost</string>
     <string name="add_post">Add post</string>
     <string name="large_text">
