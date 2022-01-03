@@ -1,6 +1,7 @@
 package com.example.lostandfound.mainActiviy;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,6 +22,7 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -28,6 +30,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lostandfound.R;
 import com.example.lostandfound.data.model.Post;
@@ -133,6 +136,8 @@ public class AddPostFragment extends Fragment {
                 currentPost.setCurrentDate();
 
                 new PostsDataSource().addPost(currentPost);
+
+                Toast.makeText(getContext(), "Post added successfully! :)", Toast.LENGTH_SHORT).show();
             }
 
         });

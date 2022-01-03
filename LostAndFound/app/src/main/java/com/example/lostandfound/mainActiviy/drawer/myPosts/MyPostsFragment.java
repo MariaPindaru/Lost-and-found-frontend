@@ -17,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.lostandfound.R;
 import com.example.lostandfound.databinding.FragmentMypostsBinding;
 import com.example.lostandfound.data.model.Post;
+import com.example.lostandfound.login.LoginRepository;
 import com.example.lostandfound.mainActiviy.drawer.PostsAdapter;
+import com.example.lostandfound.mainActiviy.drawer.PostsDataSource;
 
 import java.util.ArrayList;
 
@@ -27,7 +29,7 @@ public class MyPostsFragment extends Fragment {
     private FragmentMypostsBinding binding;
 
     private RecyclerView postRV;
-    private static PostsAdapter postAdapter;
+    private PostsAdapter postAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,13 +65,15 @@ public class MyPostsFragment extends Fragment {
         return root;
     }
 
-    public static PostsAdapter getPostAdapter() {
-        return postAdapter;
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onResume() {
+        myPostsViewModel.getPosts().setValue(new PostsDataSource().getUserPosts(LoginRepository.getInstance(null).getUser()));
+        super.onResume();
     }
 }

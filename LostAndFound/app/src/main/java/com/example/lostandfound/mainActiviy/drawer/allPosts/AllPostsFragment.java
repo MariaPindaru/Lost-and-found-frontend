@@ -29,7 +29,7 @@ public class AllPostsFragment extends Fragment {
     private FragmentAllBinding binding;
 
     private RecyclerView postRV;
-    private static PostsAdapter postAdapter;
+    private PostsAdapter postAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,8 +49,8 @@ public class AllPostsFragment extends Fragment {
 
         Observer<ArrayList<Post>> userListUpdateObserver = new Observer<ArrayList<Post>>() {
             @Override
-            public void onChanged(ArrayList<Post> userArrayList) {
-                postAdapter.updatePostList(userArrayList);
+            public void onChanged(ArrayList<Post> array) {
+                postAdapter.updatePostList(array);
             }
         };
 
@@ -65,13 +65,15 @@ public class AllPostsFragment extends Fragment {
         return root;
     }
 
-    public PostsAdapter getPostAdapter(){
-        return postAdapter;
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onResume() {
+        allPostsViewModel.getPosts().setValue(new PostsDataSource().getPosts());
+        super.onResume();
     }
 }

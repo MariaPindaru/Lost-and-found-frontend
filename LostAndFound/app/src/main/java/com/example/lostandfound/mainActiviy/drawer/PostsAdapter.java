@@ -160,9 +160,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Viewholder> 
         return postArrayList.size();
     }
 
-    public void updatePostList(final ArrayList<Post> userArrayList) {
+    public void updatePostList(final ArrayList<Post> array) {
         this.postArrayList.clear();
-        this.postArrayList = userArrayList;
+        this.postArrayList.addAll(array);
         notifyDataSetChanged();
     }
 
