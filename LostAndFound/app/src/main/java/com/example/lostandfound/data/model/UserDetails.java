@@ -15,6 +15,13 @@ public class UserDetails {
         this.email_address = email_address;
     }
 
+    public UserDetails(String id,String first_name, String last_name, String phone_number) {
+        this.id = id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.phone_number = phone_number;
+    }
+
     public String getId() {
         return id;
     }

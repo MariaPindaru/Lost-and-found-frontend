@@ -40,11 +40,24 @@ public class RegisterViewModel extends ViewModel {
         }
     }
 
-    public void loginDataChanged(String username, String password) {
+    public void registerDataChanged(String username, String password1, String password2, String firstName, String lastName,
+                                    String phone, String email) {
         if (!isUserNameValid(username)) {
-            registerFormState.setValue(new RegisterFormState(R.string.invalid_username, null));
-        } else if (!isPasswordValid(password)) {
-            registerFormState.setValue(new RegisterFormState(null, R.string.invalid_password));
+            registerFormState.setValue(new RegisterFormState(R.string.invalid_username, null, null, null, null, null, null));
+        } else if (!isStringValid(password1)) {
+            registerFormState.setValue(new RegisterFormState(null, R.string.invalid_password, null, null, null, null, null));
+        } else if (!isStringValid(password2)) {
+            registerFormState.setValue(new RegisterFormState(null, null, R.string.invalid_password, null, null, null, null));
+        } else if (!password1.equals(password2)) {
+            registerFormState.setValue(new RegisterFormState(null, null, R.string.password_match_error, null, null, null, null));
+        } else if (!isStringValid(firstName)) {
+            registerFormState.setValue(new RegisterFormState(null, null, null, R.string.required, null, null, null));
+        } else if (!isStringValid(lastName)) {
+            registerFormState.setValue(new RegisterFormState(null, null, null,  null,R.string.required, null, null));
+        } else if (!isStringValid(phone)) {
+            registerFormState.setValue(new RegisterFormState(null, null, null, R.string.required, null, R.string.required, null));
+        } else if (!isStringValid(email)) {
+            registerFormState.setValue(new RegisterFormState(null, null, null, R.string.required, null, null, R.string.required));
         } else {
             registerFormState.setValue(new RegisterFormState(true));
         }
@@ -63,7 +76,7 @@ public class RegisterViewModel extends ViewModel {
     }
 
     // A placeholder password validation check
-    private boolean isPasswordValid(String password) {
+    private boolean isStringValid(String password) {
         return password != null;
     }
 }

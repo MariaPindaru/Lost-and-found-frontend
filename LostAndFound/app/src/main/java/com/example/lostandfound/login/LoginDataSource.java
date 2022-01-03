@@ -70,7 +70,7 @@ public class LoginDataSource {
 
         OkHttpClient client = new OkHttpClient();
 
-        String url = "http://10.0.2.2:3000/register";//"http://10.0.2.2:3000/register";
+        String url = "http://10.0.2.2:3000/register";
         MediaType JSON = MediaType.get("application/json; charset=utf-8");
         Request request = new Request.Builder()
                 .url(url)
@@ -89,6 +89,7 @@ public class LoginDataSource {
                 //store current user
                 User user = getCurrentUser(jsonData);
                 LoginRepository.getInstance(this).setLoggedInUser(user);
+
                 return new Result.Success<>(user);
 
             }
@@ -97,6 +98,34 @@ public class LoginDataSource {
         }
 
         return new Result.Error(new IOException("An error occurred, try again..."));
+    }
+
+    public void addUserDetails(UserDetails userDetails){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        OkHttpClient client = new OkHttpClient();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(userDetails);
+
+        String url = "http://10.0.2.2:3000/usersdetails";
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        Request request = new Request.Builder()
+                .url(url)
+                .put(RequestBody.create(json, JSON))
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            if (response.isSuccessful()) {
+                //store current user
+                LoginRepository.getInstance(this).setDetails(userDetails);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 
     public void logout() {

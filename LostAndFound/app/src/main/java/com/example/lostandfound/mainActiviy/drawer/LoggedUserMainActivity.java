@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.lostandfound.R;
 import com.example.lostandfound.login.LoginActivity;
@@ -51,7 +52,14 @@ public class LoggedUserMainActivity extends AppCompatActivity {
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
+
         NavigationView navigationView = binding.navView;
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView navName = (TextView) headerView.findViewById(R.id.name);
+        navName.setText(LoginRepository.getInstance(null).getDetails().getFirst_name() + " " + LoginRepository.getInstance(null).getDetails().getLast_name());
+        TextView navEmail = (TextView) headerView.findViewById(R.id.email);
+        navEmail.setText(LoginRepository.getInstance(null).getDetails().getEmail_address());
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(

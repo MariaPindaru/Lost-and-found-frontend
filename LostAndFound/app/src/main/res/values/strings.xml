@@ -8,6 +8,8 @@
     <string name="welcome">"Welcome! "</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
+    <string name="password_match_error">Passwords don\'t match</string>
+    <string name="required">This field is required!</string>
     <string name="login_failed">"Login failed"</string>
 
     <string name="action_settings">Settings</string>

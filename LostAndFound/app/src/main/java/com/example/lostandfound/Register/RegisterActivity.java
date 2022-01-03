@@ -21,7 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lostandfound.R;
+import com.example.lostandfound.data.model.UserDetails;
 import com.example.lostandfound.databinding.ActivityRegisterBinding;
+import com.example.lostandfound.login.LoginRepository;
 import com.example.lostandfound.mainActiviy.drawer.LoggedUserMainActivity;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -49,8 +51,11 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText1 = binding.password1;
         final EditText passwordEditText2 = binding.password2;
+        final EditText firstNameEditText = binding.firstName;
+        final EditText lastNameEditText = binding.lastName;
+        final EditText phoneEditText = binding.phoneNumber;
+        final EditText emailEditText = binding.email;
         final Button registerButton = binding.registerBtn;
-//        final ProgressBar loadingProgressBar = binding.loading;
 
         registerViewModel.getRegisterFormState().observe(this, new Observer<RegisterFormState>() {
             @Override
@@ -62,8 +67,23 @@ public class RegisterActivity extends AppCompatActivity {
                 if (registerFormState.getUsernameError() != null) {
                     usernameEditText.setError(getString(registerFormState.getUsernameError()));
                 }
-                if (registerFormState.getPasswordError() != null) {
-                    passwordEditText1.setError(getString(registerFormState.getPasswordError()));
+                if (registerFormState.getPassword1Error() != null) {
+                    passwordEditText1.setError(getString(registerFormState.getPassword1Error()));
+                }
+                if (registerFormState.getPassword2Error() != null) {
+                    passwordEditText2.setError(getString(registerFormState.getPassword2Error()));
+                }
+                if (registerFormState.getFirstNameError() != null) {
+                    firstNameEditText.setError(getString(registerFormState.getFirstNameError()));
+                }
+                if (registerFormState.getLastNameError() != null) {
+                    lastNameEditText.setError(getString(registerFormState.getLastNameError()));
+                }
+                if (registerFormState.getPhoneError() != null) {
+                    phoneEditText.setError(getString(registerFormState.getPhoneError()));
+                }
+                if (registerFormState.getEmailError() != null) {
+                    emailEditText.setError(getString(registerFormState.getEmailError()));
                 }
             }
         });
@@ -74,12 +94,16 @@ public class RegisterActivity extends AppCompatActivity {
                 if (registerResult == null) {
                     return;
                 }
-               // loadingProgressBar.setVisibility(View.GONE);
                 if (registerResult.getError() != null) {
                     //showLoginFailed(registerResult.getError());
                     return;
                 }
                 if (registerResult.getSuccess() != null) {
+                    LoginRepository.getInstance(null).getDataSource().addUserDetails(new UserDetails(
+                            LoginRepository.getInstance(null).getUser().getUserId(),
+                            firstNameEditText.getText().toString(), lastNameEditText.getText().toString(),
+                            phoneEditText.getText().toString(), emailEditText.getText().toString()));
+
                     updateUiWithUser(registerResult.getSuccess());
                     Intent myIntent = new Intent(RegisterActivity.this, LoggedUserMainActivity.class);
                     RegisterActivity.this.startActivity(myIntent);
@@ -104,8 +128,10 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                registerViewModel.loginDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText1.getText().toString());
+                registerViewModel.registerDataChanged(usernameEditText.getText().toString(),
+                        passwordEditText1.getText().toString(), passwordEditText2.getText().toString(),
+                        firstNameEditText.getText().toString(), lastNameEditText.getText().toString(),
+                        phoneEditText.getText().toString(), emailEditText.getText().toString());
             }
         };
         usernameEditText.addTextChangedListener(afterTextChangedListener);
@@ -125,7 +151,6 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // loadingProgressBar.setVisibility(View.VISIBLE);
                 registerViewModel.register(usernameEditText.getText().toString(),
                         passwordEditText1.getText().toString());
             }
