@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -49,7 +50,14 @@ public class ProfileFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // TODO: save changes
+                UserDetails userDetails = LoginRepository.getInstance(null).getDetails();
+                userDetails.setFirst_name(firstName.getText().toString());
+                userDetails.setLast_name(lastName.getText().toString());
+                userDetails.setPhone_number(phoneNumber.getText().toString());
+                userDetails.setEmail_address(emailAddress.getText().toString());
+                LoginRepository.getInstance(null).getDataSource().updateUserDetails(userDetails);
+
+                Toast.makeText(getContext(), "Changes saved successfully! :)", Toast.LENGTH_SHORT).show();
             }
         });
 

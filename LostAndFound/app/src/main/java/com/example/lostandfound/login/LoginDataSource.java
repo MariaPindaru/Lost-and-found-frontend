@@ -175,4 +175,31 @@ public class LoginDataSource {
         UserDetails user = gson.fromJson(jsonData, type);
         return user;
     }
+
+    public void updateUserDetails(UserDetails userDetails){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        OkHttpClient client = new OkHttpClient();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(userDetails);
+
+        String url = "http://10.0.2.2:3000/usersdetails/" + userDetails.getId();
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        Request request = new Request.Builder()
+                .url(url)
+                .put(RequestBody.create(json, JSON))
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            if (response.isSuccessful()) {
+                //store current user
+                LoginRepository.getInstance(this).setDetails(userDetails);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }
