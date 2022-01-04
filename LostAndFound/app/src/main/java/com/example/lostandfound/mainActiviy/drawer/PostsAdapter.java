@@ -99,32 +99,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Viewholder> 
         if (isValid)
             Picasso.get().load(post.getPicture()).into(holder.postImageIV);
         else {
-            //holder.postImageIV.setImageURI(Uri.parse(post.getPicture()));
-            String s = post.getPicture();
-
-            try {
-                byte[] imageByte = Base64.decode(s, Base64.DEFAULT);
-                Bitmap bm = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
-                holder.postImageIV.setImageBitmap(Bitmap.createScaledBitmap(bm, 50, 50, false));
-            }
-            catch (Exception e){
-                System.out.println(e);
-            }
-//            byte[] imgbytes = Base64.decode(s, Base64.DEFAULT);
-//            Bitmap bitmap = BitmapFactory.decodeByteArray(imgbytes, 0,
-//                    imgbytes.length);
-            //holder.postImageIV.setImageBitmap(bitmap);
-
-//            byte[] bytes = post.getPicture().getBytes(StandardCharsets.UTF_8);
-//            Bitmap photo = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-//            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//            photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
-//            byte[] bArray = bos.toString();
-
-        //    System.out.println(bytes.equals(bArray));
-//            if (photo != null)
-//                holder.postImageIV.setImageBitmap(Bitmap.createScaledBitmap(photo, 200, 200, false));
+            holder.postImageIV.setImageURI(Uri.parse(post.getPicture()));
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -145,9 +120,26 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Viewholder> 
             holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new PostsDataSource().deletePost(postArrayList.get(position));
-                    postArrayList.remove(position);
-                    updatePostList(postArrayList);
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    new PostsDataSource().deletePost(postArrayList.get(position));
+                                    postArrayList.remove(position);
+                                    notifyDataSetChanged();
+                                    break;
+
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    //No button clicked
+                                    break;
+                            }
+                        }
+                    };
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("Are you sure you want to delete this post?").setPositiveButton("Yes", dialogClickListener)
+                            .setNegativeButton("No", dialogClickListener).show();
                 }
             });
 

@@ -65,6 +65,7 @@ import java.util.Locale;
 public class AddPostFragment extends Fragment {
 
     private static final int SELECT_PICTURE = 200;
+
     private FragmentAddPostBinding binding;
     private Post currentPost = null;
 
@@ -77,6 +78,9 @@ public class AddPostFragment extends Fragment {
     private TextView titleTV;
     private TextView descriptionTV;
     private TextView addressTV;
+
+    private ImageView image;
+    private Button upload;
 
     Spinner spinner;
 
@@ -113,10 +117,28 @@ public class AddPostFragment extends Fragment {
         addressTV = root.findViewById(R.id.address);
         titleTV = root.findViewById(R.id.title);
         descriptionTV = root.findViewById(R.id.description);
+        image = root.findViewById(R.id.image);
+        upload = root.findViewById(R.id.upload);
+
+        Picasso.get().load(currentPost.getPicture()).into(image);
 
         searchView = root.findViewById(R.id.idSearchView);
         mapsFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         add = root.findViewById(R.id.addPostBtn);
+
+        upload.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent();
+                i.setType("image/*");
+                i.setAction(Intent.ACTION_GET_CONTENT);
+
+                // pass the constant to compare it
+                // with the returned requestCode
+                startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+            }
+        });
 
         add.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -128,10 +150,10 @@ public class AddPostFragment extends Fragment {
 
                 currentPost.setType(spinner.getSelectedItem().toString());
 
-                if(currentPost.getType().toUpperCase(Locale.ROOT).equals("LOST"))
-                    currentPost.setPicture("https://upload.wikimedia.org/wikipedia/commons/2/24/Lost_Black_Wikipedia.png");
-                else
-                    currentPost.setPicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTByL_LAWLDPPU2wgtFR7w1jgCN_bjlkhBLUPVPYDJyBQ9Mnuk72ltxE086HKdqibV8kxI&usqp=CAU");
+//                if (currentPost.getType().toUpperCase(Locale.ROOT).equals("LOST"))
+//                    currentPost.setPicture("https://upload.wikimedia.org/wikipedia/commons/2/24/Lost_Black_Wikipedia.png");
+//                else
+//                    currentPost.setPicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTByL_LAWLDPPU2wgtFR7w1jgCN_bjlkhBLUPVPYDJyBQ9Mnuk72ltxE086HKdqibV8kxI&usqp=CAU");
 
                 currentPost.setCurrentDate();
 
@@ -197,6 +219,20 @@ public class AddPostFragment extends Fragment {
         });
 
         return root;
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SELECT_PICTURE) {
+            // Get the url of the image from data
+            Uri selectedImageUri = data.getData();
+            if (null != selectedImageUri) {
+                image.setImageURI(selectedImageUri);
+                currentPost.setPicture(selectedImageUri.toString());
+            }
+        }
+
     }
 
 }
