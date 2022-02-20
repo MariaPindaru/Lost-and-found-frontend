@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="User contancts" />
+                android:text="User contacts" />
 
             <TextView
                 android:id="@+id/phone"

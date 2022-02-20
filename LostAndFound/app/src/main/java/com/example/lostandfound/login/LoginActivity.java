@@ -123,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());
             }
         };
+
         usernameEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -137,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        assert loginButton != null;
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
+        assert registerButton != null;
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -63,7 +63,10 @@ public class RegisterActivity extends AppCompatActivity {
                 if (registerFormState == null) {
                     return;
                 }
+
+                System.out.println(registerFormState.isDataValid());
                 registerButton.setEnabled(registerFormState.isDataValid());
+
                 if (registerFormState.getUsernameError() != null) {
                     usernameEditText.setError(getString(registerFormState.getUsernameError()));
                 }
@@ -136,7 +139,13 @@ public class RegisterActivity extends AppCompatActivity {
         };
         usernameEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText1.addTextChangedListener(afterTextChangedListener);
-        passwordEditText1.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        passwordEditText2.addTextChangedListener(afterTextChangedListener);
+        firstNameEditText.addTextChangedListener(afterTextChangedListener);
+        lastNameEditText.addTextChangedListener(afterTextChangedListener);
+        phoneEditText.addTextChangedListener(afterTextChangedListener);
+        emailEditText.addTextChangedListener(afterTextChangedListener);
+
+        emailEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

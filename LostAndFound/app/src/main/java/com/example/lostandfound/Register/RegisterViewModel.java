@@ -77,6 +77,8 @@ public class RegisterViewModel extends ViewModel {
 
     // A placeholder password validation check
     private boolean isStringValid(String password) {
-        return password != null;
+        if(password == null || password.isEmpty())
+            return false;
+        return true;
     }
 }

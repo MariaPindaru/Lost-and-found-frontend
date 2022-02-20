@@ -94,6 +94,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Viewholder> 
         holder.postTitleTV.setText(post.getTitle());
         holder.postLocationTV.setText(post.getLocation());
         holder.postDateTV.setText(df.format(post.getDate()));
+        holder.postDescriptionTV.setText(post.getDescription());
 
         boolean isValid = URLUtil.isValidUrl(post.getPicture());
         if (isValid)
@@ -123,7 +124,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Viewholder> 
                     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
+                            switch (which) {
                                 case DialogInterface.BUTTON_POSITIVE:
                                     new PostsDataSource().deletePost(postArrayList.get(position));
                                     postArrayList.remove(position);
@@ -164,6 +165,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Viewholder> 
         private ImageView postImageIV;
         private TextView postTitleTV;
         private TextView postLocationTV;
+        private TextView postDescriptionTV;
         private TextView postDateTV;
 
         private Button deleteBtn;
@@ -174,6 +176,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.Viewholder> 
             postTitleTV = itemView.findViewById(R.id.idPostTitle);
             postLocationTV = itemView.findViewById(R.id.idPostLocation);
             postDateTV = itemView.findViewById(R.id.idPostDate);
+            postDescriptionTV = itemView.findViewById(R.id.idPostDescription);
 
             deleteBtn = itemView.findViewById(R.id.deleteBtn);
         }

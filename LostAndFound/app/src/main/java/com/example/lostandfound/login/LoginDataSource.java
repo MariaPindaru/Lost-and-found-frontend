@@ -186,16 +186,15 @@ public class LoginDataSource {
         String json = gson.toJson(userDetails);
 
         String url = "http://10.0.2.2:3000/usersdetails/" + userDetails.getId();
+
         MediaType JSON = MediaType.get("application/json; charset=utf-8");
         Request request = new Request.Builder()
                 .url(url)
                 .put(RequestBody.create(json, JSON))
                 .build();
-
         try {
             Response response = client.newCall(request).execute();
             if (response.isSuccessful()) {
-                //store current user
                 LoginRepository.getInstance(this).setDetails(userDetails);
             }
         } catch (Exception e) {
